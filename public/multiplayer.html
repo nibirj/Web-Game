@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Täringu mäng</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="game.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="multiPlayer.js"></script>
+</head>
+<body>
+<div class="nav">
+    <h1>Täringu mäng.</h1>
+    <p>nibirj 193953IAIB</p>
+</div>
+<div class="table">
+    <div class="upper">
+        <h1 class="whosTurn" id="whosTurn">Player 1</h1>
+        <p>Turns left:</p>
+        <p id="turnsLeft">3</p>
+    </div>
+    <div class="container" id="other">
+        <button onclick="roll()" class="big">Roll Dice</button></div>
+    <div class="lower">
+        <img id="one" src="one.png" style="width:100px;height:100px;" onclick="cantChange(0, 'one')">
+        <img id="two" src="two.png" style="width:100px;height:100px;" onclick="cantChange(1, 'two')">
+        <img id="three" src="three.png" style="width:100px;height:100px;" onclick="cantChange(2, 'three')">
+        <img id="four" src="four.png" style="width:100px;height:100px;" onclick="cantChange(3, 'four')">
+        <img id="five" src="five.png" style="width:100px;height:100px;" onclick="cantChange(4, 'five')">
+    </div>
+    <div class="score">
+        <table class="scoreTable">
+            <tr>
+                <th>Possobilities</th>
+                <th id="Player1">Player 1</th>
+                <th id="Player2">Player 2</th>
+            </tr>
+            <tr>
+                <td>One</td>
+                <td id="ones" onclick="changeTable('ones', 0)">0</td>
+                <td id="ones2" onclick="changeTable2('ones2', 0)">0</td>
+            </tr>
+            <tr>
+                <td>Two</td>
+                <td id="twos" onclick="changeTable('twos', 1)">0</td>
+                <td id="twos2" onclick="changeTable2('twos2', 1)">0</td>
+            </tr>
+            <tr>
+                <td>Three</td>
+                <td id="threes" onclick="changeTable('threes', 2)">0</td>
+                <td id="threes2" onclick="changeTable2('threes2', 2)">0</td>
+            </tr>
+            <tr>
+                <td>Four</td>
+                <td id="fours" onclick="changeTable('fours', 3)">0</td>
+                <td id="fours2" onclick="changeTable2('fours2', 3)">0</td>
+            </tr>
+            <tr>
+                <td>Five</td>
+                <td id="fives" onclick="changeTable('fives', 4)">0</td>
+                <td id="fives2" onclick="changeTable2('fives2', 4)">0</td>
+            </tr>
+            <tr>
+                <td>Six</td>
+                <td id="sixs" onclick="changeTable('sixs', 5)">0</td>
+                <td id="sixs2" onclick="changeTable2('sixs2', 5)">0</td>
+            </tr>
+            <tr>
+                <td>3-of-a-Kind</td>
+                <td id="3ofakind" onclick="changeTable('3ofakind', 6)">0</td>
+                <td id="3ofakind2" onclick="changeTable2('3ofakind2', 6)">0</td>
+            </tr>
+            <tr>
+                <td>4-of-a-Kind</td>
+                <td id="4ofaKind" onclick="changeTable('4ofaKind', 7)">0</td>
+                <td id="4ofaKind2" onclick="changeTable2('4ofaKind2', 7)">0</td>
+            </tr>
+            <tr>
+                <td>Small Straight</td>
+                <td id="smallStraight" onclick="changeTable('smallStraight', 8)">0</td>
+                <td id="smallStraight2" onclick="changeTable2('smallStraight2', 8)">0</td>
+            </tr>
+            <tr>
+                <td>Large Straight</td>
+                <td id="largeStraight" onclick="changeTable('largeStraight', 9)">0</td>
+                <td id="largeStraight2" onclick="changeTable2('largeStraight2', 9)">0</td>
+            </tr>
+            <tr>
+                <td>Full House</td>
+                <td id="fullHouse" onclick="changeTable('fullHouse', 10)">0</td>
+                <td id="fullHouse2" onclick="changeTable2('fullHouse2', 10)">0</td>
+            </tr>
+            <tr>
+                <td>Joker</td>
+                <td id="jokers" onclick="changeTable('jokers', 11)">0</td>
+                <td id="jokers2" onclick="changeTable2('jokers2', 11)">0</td>
+            </tr>
+            <tr>
+                <td>Yahtzee</td>
+                <td id="yahtzee" onclick="changeTable('yahtzee', 12)">0</td>
+                <td id="yahtzee2" onclick="changeTable2('yahtzee2', 12)">0</td>
+            </tr>
+            <tr>
+                <td>Total Score</td>
+                <td id="totalScore">0</td>
+                <td id="totalScore2">0</td>
+            </tr>
+        </table>
+        <h1>Turns left:</h1>
+        <p id="turnsCount" class="turnsCount">0</p>
+    </div>
+</div>
+</body>
+</html>

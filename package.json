@@ -1,0 +1,23 @@
+{
+  "name": "projectveb",
+  "version": "1.0.0",
+  "description": "Multiplayer yahtzee.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "socket.io": "^3.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.cs.ttu.ee/nibirj/prax4.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
