@@ -96,16 +96,44 @@ function enemyRoll() {
             })
         };
         fetch('/enemyRoll', input).then(r => {
-            /*r.json().then(r => {
-                if(r.url !== false) {
-
+            r.json().then(r => {
+                console.log(r);
+                if(r !== false) {
+                    changeEnemyPng(r.image);
+                    scoreCount = r.scoreCount;
+                    if (document.getElementById("Player1").innerHTML === user) {
+                        changeScoreForPerson2();
+                    } else {
+                        changeScore();
+                    }
+                    if (currentPlayer !== user) {
+                        enemyRoll();
+                    }
                 } else {
                     enemyRoll();
                 }
-            });*/
+            });
         })
-    }, 2000);
+    }, 1000);
 }
+
+function changeEnemyPng(images) {
+    for (let i = 0; i < 5; i++) {
+        if (i === 0 && canIChange[i]) {
+            changePng(getById("one"), images[i], i);
+        } else if (i === 1 ) {
+            changePng(getById("two"), images[i], i);
+        } else if (i === 2) {
+            changePng(getById("three"), images[i], i);
+        } else if (i === 3) {
+            changePng(getById("four"), images[i], i);
+        } else if (i === 4) {
+            changePng(getById("five"), images[i], i);
+        }
+    }
+}
+
+
 
 function roll() {
     if (turnshuman != null) {
@@ -116,7 +144,7 @@ function roll() {
             canPutScore = true;
             gameStarted = true;
             for (i = 0; i < 5; i++) {
-                const random = Math.floor(Math.random() * (5 - 0 + 1) + 0);
+                const random = Math.floor(Math.random() * (5 + 1));
                 if (i == 0 && canIChange[i]) {
                     changePng(getById("one"), images[random], i);
                 } else if (i == 1 && canIChange[i]) {
@@ -129,13 +157,28 @@ function roll() {
                     changePng(getById("five"), images[random], i);
                 }
             }
-            if (turnshuman == secondPerson) {
+
+            if (document.getElementById("Player1").innerHTML === user) {
                 calculate();
                 changeScore();
-            } else  {
+            } else {
                 calculate2();
                 changeScoreForPerson2();
             }
+            const input = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    images: {
+                        gameId: gameId,
+                        image: imagesRightNow,
+                        scoreCount: scoreCount
+                    }
+                })
+            };
+            fetch('/rollPlace', input).then();
             turns--;
             getById("turnsLeft").innerHTML = turns;
         }

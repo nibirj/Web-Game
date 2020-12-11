@@ -11,7 +11,8 @@ const io = socketIO(server)
 const url = require('url');
 const connection = [];
 let gameId = null;
-let roll = null;
+let imageRightNow = null;
+let scoreCount = null;
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")))
 
@@ -100,11 +101,21 @@ app.post('/settings', function (req, res) {
 })
 
 app.post('/enemyRoll', function (req, res) {
-    if(gameId ===req.body.id.gameId) {
-
+    if(gameId === req.body.id.gameId) {
+        gameId = null;
+        res.send({
+            image: imageRightNow,
+            scoreCount: scoreCount
+        })
     } else {
-        req.send(false);
+        res.send(false);
     }
+})
+
+app.post('/rollPlace', function (req, res) {
+    gameId = req.body.images.gameId;
+    imageRightNow = req.body.images.image;
+    scoreCount = req.body.images.scoreCount;
 })
 
 /*
