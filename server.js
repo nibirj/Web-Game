@@ -10,7 +10,8 @@ const jsonParser = bodyParser.json()
 const io = socketIO(server)
 const url = require('url');
 const connection = [];
-
+let gameId = null;
+let roll = null;
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")))
 
@@ -35,7 +36,9 @@ app.post('/multiplayer', function(request, response){
             if (i[2] === null && i[1].user.turns === request.body.user.turns){
                 i[2] = request.body;
                 found = true;
-                return response.json( {url: '/multiplayer.html?player1=' + i[1].user.name + '&player2=' + request.body.user.name + '&turns=' + request.body.user.turns});
+                return response.json( {url: '/multiplayer.html?player1=' + i[1].user.name + '&player2=' +
+                        request.body.user.name + '&turns=' + request.body.user.turns + '&user=' + i[2].user.name
+                        + '&id=' + i[0]});
                 }
             }
         )
@@ -53,10 +56,12 @@ app.post('/waitingForResponse', function (req, res) {
             found = true;
             return res.json( {
                 status: 'success',
-                url: '/multiplayer.html?player1=' + i[1].user.name + '&player2=' + i[2].user.name + '&turns=' + i[3]
+                url: '/multiplayer.html?player1=' + i[1].user.name + '&player2=' + i[2].user.name
+                    + '&turns=' + i[3] + '&user=' + i[1].user.name + '&id=' + req.body.user.index
             });
         }
     });
+
     if (found === false) {
         return res.json ({
             status: 'error',
@@ -76,7 +81,30 @@ app.use('/changeName', function(req, res)  {
     const player1 = search_params.get('player1');
     const player2 = search_params.get('player2');
     const turns = search_params.get('turns');
-    return res.json({players : [player1, player2, turns]});
+    const gameId = search_params.get('id');
+    const user = search_params.get('user');
+    return res.json({players : [player1, player2, turns],
+        gameId: gameId,
+        user: user
+    });
+})
+
+app.post('/settings', function (req, res) {
+    let userStart = null;
+    connection.forEach((i) => {
+        if(parseInt(i[0].toString()) === parseInt(req.body.settings.gameId.toString())) {
+            userStart = i[1].user.name;
+        }
+    });
+    return res.json({userStart: userStart});
+})
+
+app.post('/enemyRoll', function (req, res) {
+    if(gameId ===req.body.id.gameId) {
+
+    } else {
+        req.send(false);
+    }
 })
 
 /*

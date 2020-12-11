@@ -12,14 +12,14 @@ var totalScore2 = 0;
 var turnshuman = null;
 var turns = 3;
 var secondPerson = null;
-
-let currentPlayer = "user";
-let gameMode = "";
+let user = null;
+let currentPlayer = null;
+let gameId = null;
 let playerNum = 0;
 let ready = false;
 let enemyReady = false;
 
-const socket = io();
+//const socket = io();
 
 
 
@@ -39,6 +39,7 @@ const socket = io();
 });*/
 
 async function changeName() {
+
     const options = {
         method: 'POST',
         headers: {
@@ -50,22 +51,65 @@ async function changeName() {
             }
         })
     };
-
     const response = await fetch("/changeName", options);
     const json = await response.json();
     document.getElementById("Player1").innerHTML = json.players[0];
     document.getElementById("whosTurn").innerHTML = json.players[0];
     document.getElementById("Player2").innerHTML = json.players[1];
     document.getElementById("turnsCount").innerHTML = json.players[2];
+    user = json.user.toString();
+    gameId = json.gameId;
     turnshuman = json.players[2];
     secondPerson = json.players[2];
+    const gameSettings = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            settings: {
+                gameId: gameId
+            }
+        })
+    };
+    const response2 = await fetch("/settings", gameSettings);
+    const json2 = await response2.json();
+    currentPlayer = json2.userStart.toString();
+    if (user !== currentPlayer) {
+        enemyRoll();
+    }
 }
 
 changeName().then();
 
+function enemyRoll() {
+    setTimeout(()=> {
+        const input = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: {
+                    gameId: gameId
+                }
+            })
+        };
+        fetch('/enemyRoll', input).then(r => {
+            /*r.json().then(r => {
+                if(r.url !== false) {
+
+                } else {
+                    enemyRoll();
+                }
+            });*/
+        })
+    }, 2000);
+}
+
 function roll() {
     if (turnshuman != null) {
-        if (turns == 0) {
+        if (turns === 0 || currentPlayer !== user) {
 
         } else {
             scoreCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
