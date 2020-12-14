@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const http = require("http");
-const port = 4200;
+const port = 6108;
 const socketIO = require('socket.io')
 const app = express();
 const server = http.createServer(app)
@@ -13,6 +13,12 @@ const connection = [];
 let gameId = null;
 let imageRightNow = null;
 let scoreCount = null;
+let totalScore = null;
+let tableElementTotal = null;
+let countChangeList = null;
+let grey = null;
+let gameId2 = null;
+
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")))
 
@@ -28,6 +34,7 @@ app.use(bodyParser.json());
 app.post('/multiplayer', function(request, response){
     if(connection.length < 1) {
         connection.push([0, request.body, null, request.body.user.turns]);
+        //[id, p1, p2, turns]
         return response.json({url: false, index: 0});
     } else {
         let found = false;
@@ -62,7 +69,6 @@ app.post('/waitingForResponse', function (req, res) {
             });
         }
     });
-
     if (found === false) {
         return res.json ({
             status: 'error',
@@ -73,7 +79,7 @@ app.post('/waitingForResponse', function (req, res) {
 })
 
 app.get('/redirectMulti', function (req, res){
-    return res.redirect( 'http://localhost:4200/choose.html');
+    return res.redirect( '/choose.html');
 })
 
 app.use('/changeName', function(req, res)  {
@@ -116,6 +122,30 @@ app.post('/rollPlace', function (req, res) {
     gameId = req.body.images.gameId;
     imageRightNow = req.body.images.image;
     scoreCount = req.body.images.scoreCount;
+    res.json(true);
+})
+
+app.post('/changeTable', function (req, res) {
+    gameId2 = req.body.cont.gameId;
+    totalScore = req.body.cont.totalScore;
+    tableElementTotal = req.body.cont.totalScoreTable;
+    countChangeList = req.body.cont.countChange;
+    grey = req.body.cont.tableGray;
+    res.json(true);
+})
+
+app.post('/enemyTable', function (req, res) {
+    if(gameId2 === req.body.id.gameId) {
+        gameId2 = null;
+        res.send({
+            score: totalScore,
+            elementTable: tableElementTotal,
+            grey: grey,
+            countList: countChangeList
+        })
+    } else {
+        res.send(false);
+    }
 })
 
 /*
