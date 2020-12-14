@@ -278,9 +278,8 @@ function cantChange(id, element) {
             getById(element).style.border = "solid #0000FF";
         } else {
             canIChange[id] = true;
-            getById(element).style.border = "";
+            getById(element).style.border = "solid #000000";
         }
-
     }
 }
 
@@ -593,7 +592,7 @@ function changeBack() {
     for (i = 0; i < 6; i++) {
         if (canIChange[i] === false) {
             canIChange[i] = true;
-            getById(imagesId[i]).style.border = "";
+            getById(imagesId[i]).style.border = "solid #000000";
         }
     }
     turns = 3;
@@ -607,7 +606,7 @@ function changeBack2() {
     for (i = 0; i < 6; i++) {
         if (canIChange[i] === false) {
             canIChange[i] = true;
-            getById(imagesId[i]).style.border = "";
+            getById(imagesId[i]).style.border = "solid #000000";
         }
     }
     turns = 3;

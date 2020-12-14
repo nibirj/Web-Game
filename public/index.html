@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="multiplayer.css">
 </head>
 <body>
-<button id="myButton" class="float-left submit-button" >Single Player</button>
-<script type="text/javascript">
-    document.getElementById("myButton").onclick = function () {
-        location.href = "singlePlayer.html";
-    };
-</script>
-<button id="multiplayer" class="float-left submit-button" >Multiplayer</button>
-<script type="text/javascript">
-    document.getElementById("multiplayer").onclick = function () {
-        fetch("/redirectMulti").then(r => {
-            location.href = r.url;
-        });
-    };
-
-</script>
+<div class="multiPLayerButton">
+    <button id="myButton" class="float-left submit-button multi" >Single Player</button>
+    <script type="text/javascript">
+        document.getElementById("myButton").onclick = function () {
+            location.href = "singlePlayer.html";
+        };
+    </script>
+    <br>
+    <button id="multiplayer" class="float-left submit-button multi" >Multiplayer</button>
+    <script type="text/javascript">
+        document.getElementById("multiplayer").onclick = function () {
+            fetch("/redirectMulti").then(r => {
+                location.href = r.url;
+            });
+        };
+    </script>
+</div>
 </body>
 </html>
