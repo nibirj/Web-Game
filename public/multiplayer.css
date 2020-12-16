@@ -11,11 +11,13 @@ body {
     height: 200px;
     flex-direction: column;
 }
+
 .multi {
     height:30px;
     width:100px;
     padding: 5px;
 }
+
 .nav {
     background-color: darkgreen;
     height: 100px;
@@ -40,6 +42,7 @@ body {
     z-index: 1000;
     border: 3px solid yellow;
 }
+
 .score {
     background-color: white;
     position: absolute;
@@ -50,6 +53,7 @@ body {
     top: 122px;
     border: 3px solid white;
 }
+
 .upper {
     border-radius: 20px;
     top: 5px;
@@ -84,6 +88,7 @@ body {
 table, th, td {
     border: 1px solid black;
 }
+
 td {
     width: 100px;
     text-align: center;
@@ -104,4 +109,12 @@ td {
     height: 100px;
     border-radius: 20px;
     background-color: skyblue;
+}
+
+.hidenDiv {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    flex-direction: column;
 }

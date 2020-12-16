@@ -19,24 +19,6 @@ let player1 = null;
 let player2 = null;
 let interval;
 
-//const socket = io();
-
-
-
-/*fetch('/multiplayer', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        user: {
-            name: name,
-            turns: strTurns
-        }
-    })
-}).then(r => {
-    location.href = r.url;
-});*/
 
 async function changeName() {
     const options = {
@@ -84,42 +66,6 @@ async function changeName() {
 
 changeName().then();
 
-/*function enemyRoll() {
-    setTimeout(()=> {
-        const input = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: {
-                    gameId: gameId
-                }
-            })
-        };
-        fetch('/enemyRoll', input).then(r => {
-            r.json().then(r => {
-                if(r !== false) {
-                    changeEnemyPng(r.image);
-                    scoreCount = r.scoreCount;
-                    turns--;
-                    getById("turnsLeft").innerHTML = turns;
-                    if (document.getElementById("Player1").innerHTML === user) {
-                        changeScoreForPerson2();
-                    } else {
-                        changeScore();
-                    }
-                    console.log(currentPlayer);
-                    if (currentPlayer !== user) {
-                        enemyRoll();
-                    }
-                } else {
-                    enemyRoll();
-                }
-            });
-        })
-    }, 1000);
-}*/
 
 function enemyRoll() {
     interval = setInterval(function () {
@@ -171,6 +117,7 @@ function enemyChangeTable() {
                     if (document.getElementById("Player1").innerHTML === user) {
                         clearInterval(interval);
                         countChange2 = r.countList;
+                        totalScore2 += r.score;
                         getById(r.grey).style.backgroundColor = "gray";
                         getById(r.elementTable).innerHTML = r.score;
                         currentPlayer = user;
@@ -179,6 +126,7 @@ function enemyChangeTable() {
                     } else {
                         clearInterval(interval);
                         countChange = r.countList;
+                        totalScore += r.score;
                         getById(r.grey).style.backgroundColor = "gray";
                         getById(r.elementTable).innerHTML = r.score;
                         getById("whosTurn").innerHTML = user;
@@ -614,8 +562,7 @@ function changeBack2() {
     document.getElementById("turnsCount").innerHTML = secondPerson;
     getById("turnsLeft").innerHTML = turns;
     if (secondPerson === 0 && turnshuman === 0) {
-        alert("Game is over Player 1 score: " + totalScore + " Player 2 score: " + totalScore2);
+        alert("Game is over "+ player1 + " score: " + document.getElementById("totalScore").innerHTML + " " + player2 + " score: " + document.getElementById("totalScore2").innerHTML);
         window.location.reload();
     }
-
 }

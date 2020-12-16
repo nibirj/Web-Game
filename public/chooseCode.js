@@ -2,6 +2,7 @@ async function giveHowMenyTurns() {
     var turns = document.getElementById("turns");
     var name = document.getElementById("name").value;
     var strTurns = turns.options[turns.selectedIndex].value;
+    document.getElementById("hidenDiv").style.display = "flex";
     const options = {
         method: 'POST',
         headers: {
@@ -47,12 +48,3 @@ async function waitingPlayer(index) {
     }, 2000);
 }
 
-/*
-.then(r => {
-    if (r.ok) {
-        console.log(r);
-        //location.href = r.url;
-    } else {
-        console.log("estj");
-    }
-});*/
